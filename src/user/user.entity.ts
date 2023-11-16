@@ -33,4 +33,16 @@ export class User {
     password: string;
 
 
+    @Column({
+      nullable: false,
+      default: ''
+    })
+    name: string;
+
+    @Column({
+      nullable: false,
+      default: ''
+    })
+    phoneNumber: string;
+
 }

@@ -10,6 +10,13 @@ export class UserService {
         private usersRepository: Repository<User>,
     ) {}
 
+    // //template de méthode
+    // nomMethode(parametre: string): typeRetour {
+    //     // do STUFF
+    //     // var resultat = true
+    //     return resultatSousFormatDuTypeDeRetour
+    // }
+
     findAll(): Promise<User[]> {
         return this.usersRepository.find();
     }
