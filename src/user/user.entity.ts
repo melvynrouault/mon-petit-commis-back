@@ -1,8 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToMany} from 'typeorm';
 
 @Entity('user')
 export class User {
-
     @PrimaryGeneratedColumn({
         type: 'bigint',
         name: 'user_id',
@@ -13,6 +12,25 @@ export class User {
         nullable: false,
         default: '',
       })    
-    username: string;
+    firstname: string;
+
+    @Column({
+      nullable: false,
+      default: '',
+    })    
+    lastname: string;
+
+    @Column({
+      nullable: false,
+      default: '',
+    })    
+    email: string;
+    
+    @Column({
+      nullable: false,
+      default: '',
+    })    
+    password: string;
+
 
 }
