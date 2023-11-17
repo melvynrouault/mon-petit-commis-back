@@ -12,25 +12,27 @@ export class RecipeService {
     private recipesRepository: Repository<Recipe>,
   ) {}
   async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
-    const recipeExists = await this.recipesRepository.findOne({where: {title: createRecipeDto.title}}) ;
-        console.log(recipeExists);
-        if(recipeExists) {
-            throw new HttpException('Recipe already exists', HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        const newUser = this.recipesRepository.create(createRecipeDto);
-        return this.recipesRepository.save(newUser);
+    const recipeExists = await this.recipesRepository.findOne({where: {title: createRecipeDto.title}});
+    console.log(recipeExists);
+    if(recipeExists) {
+        throw new HttpException('Recipe already exists', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const newUser = this.recipesRepository.create(createRecipeDto);
+    return this.recipesRepository.save(newUser);
   }
 
   findAll(): Promise<Recipe[]> {
-      return this.recipesRepository.find();
+      return this.recipesRepository.find({
+        relations: {'user': true}
+      });
   }
 
   async findOne(id: number) {
-    const recipeExists = await this.recipesRepository.findOne({where: {id: id}});
-        if(!recipeExists) {
-            throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
-        }
-        return recipeExists;
+    const recipeExists = await this.recipesRepository.findOne({where: {id: id}, relations: {'user': true}});
+    if(!recipeExists) {
+        throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
+    }
+    return recipeExists;
   }
 
   async update(id: number, updateRecipeDto: UpdateRecipeDto) {

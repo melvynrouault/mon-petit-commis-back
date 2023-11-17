@@ -13,24 +13,26 @@ export class UserService {
   ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     const userExists = await this.userRepository.findOne({where: {email: createUserDto.email}}) ;
-        console.log(userExists);
-        if(userExists) {
-            throw new HttpException('User already exists', HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-        const newUser = this.userRepository.create(createUserDto);
-        return this.userRepository.save(newUser);
+    console.log(userExists);
+    if(userExists) {
+        throw new HttpException('User already exists', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const newUser = this.userRepository.create(createUserDto);
+    return this.userRepository.save(newUser);
   }
 
   findAll(): Promise<User[]> {
-      return this.userRepository.find();
+    return this.userRepository.find({
+      relations: {'recipes': true}
+    });
   }
 
   async findOne(id: number) {
-    const userExists = await this.userRepository.findOne({where: {id: id}});
-        if(!userExists) {
-            throw new HttpException('User not found', HttpStatus.NOT_FOUND);
-        }
-        return userExists;
+    const userExists = await this.userRepository.findOne({where: {id: id}, relations: {'recipes': true}});
+    if(!userExists) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    return userExists;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
