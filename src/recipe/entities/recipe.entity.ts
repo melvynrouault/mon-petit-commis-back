@@ -25,5 +25,11 @@ export class Recipe {
         default: '',
     })    
     description: string;
+    
+    @Column({
+        nullable: false,
+        default: '',
+    })    
+    photo: string;
 
 }
