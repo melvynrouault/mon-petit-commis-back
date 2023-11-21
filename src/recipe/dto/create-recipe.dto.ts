@@ -10,5 +10,5 @@ export class CreateRecipeDto {
     @IsNotEmpty()
     description: string;
 
-    photo: string
+    urlPhoto: string
 }

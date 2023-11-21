@@ -31,7 +31,7 @@ export class Recipe {
         nullable: false,
         default: '',
     })    
-    photo: string;
+    urlPhoto: string;
 
     @ManyToOne(() => User, (user) => user.recipes)
     user: User;
