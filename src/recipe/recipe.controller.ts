@@ -22,9 +22,9 @@ export class RecipeController {
     return this.recipeService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: number, @Body() updateRecipeDto: UpdateRecipeDto) {
-    return this.recipeService.update(id, updateRecipeDto);
+  @Patch(':id') 
+  update(@Param('id') id: string, @Body() updateRecipeDto: UpdateRecipeDto) {
+    return this.recipeService.update(+id, updateRecipeDto);
   }
 
   @Delete(':id')

@@ -41,7 +41,8 @@ export class RecipeService {
     if(!recipeExists) {
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
     }
-    return this.recipesRepository.update(id, updateRecipeDto);
+    await this.recipesRepository.update(id, updateRecipeDto);
+    return await this.recipesRepository.findOne({where: {id: id}});
   }
 
   async remove(id: number) {
