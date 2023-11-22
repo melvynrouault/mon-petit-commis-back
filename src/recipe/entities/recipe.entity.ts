@@ -16,13 +16,13 @@ export class Recipe {
     title: string;
 
     @Column({
-        nullable: false,
+        nullable: true,
         default: '',
     })    
     link: string;
 
     @Column({
-        nullable: false,
+        nullable: true,
         default: '',
     })    
     description: string;
