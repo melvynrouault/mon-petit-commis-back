@@ -15,4 +15,6 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
 
     @IsNotEmpty()
     password: string;
+
+    photoPath?: string;
 }

@@ -13,4 +13,6 @@ export class CreateUserDto {
 
     @IsNotEmpty()
     password: string;
+
+    photoPath: string;
 }

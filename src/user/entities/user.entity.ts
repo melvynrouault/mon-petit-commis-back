@@ -33,6 +33,12 @@ export class User {
     })    
     password: string;
 
+    @Column({
+      nullable: true,
+      default: ''
+    })
+    photoPath: string;
+
     @OneToMany(() => Recipe, (recipe) => recipe.user)
     recipes: Recipe[];
 
