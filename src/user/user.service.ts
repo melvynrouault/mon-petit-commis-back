@@ -46,7 +46,7 @@ export class UserService {
     if(userExists.password !== loginUserDto.password) {
       throw new HttpException('Invalid credentials', HttpStatus.INTERNAL_SERVER_ERROR);
     }
-    const access_token = await this.jwtService.signAsync({userEmail: userExists.email, username: userExists.firstname })
+    const access_token = await this.jwtService.signAsync({id: userExists.id})
     return {access_token: access_token};
   }
 
