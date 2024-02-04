@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { LoginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User)
     private userRepository: Repository<User>,
+    private jwtService: JwtService
   ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     const userExists = await this.userRepository.findOne({where: {email: createUserDto.email}}) ;
@@ -33,6 +36,18 @@ export class UserService {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
     return userExists;
+  }
+
+  async login(loginUserDto: LoginUserDto) {
+    const userExists = await this.userRepository.findOne({where: {email: loginUserDto.email}});
+    if(!userExists) {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+    if(userExists.password !== loginUserDto.password) {
+      throw new HttpException('Invalid credentials', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+    const access_token = await this.jwtService.signAsync({userEmail: userExists.email, username: userExists.firstname })
+    return {access_token: access_token};
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
