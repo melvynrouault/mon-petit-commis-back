@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Query } from '@nestjs/common';
 import { RecipeService } from './recipe.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
@@ -12,9 +12,9 @@ export class RecipeController {
     return this.recipeService.create(createRecipeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.recipeService.findAll();
+  @Get('/user/:userId')
+  findAll(@Param('userId') userId: number) {
+    return this.recipeService.findAll(userId);
   }
 
   @Get(':id')

@@ -11,6 +11,7 @@ export class RecipeService {
     @InjectRepository(Recipe)
     private recipesRepository: Repository<Recipe>,
   ) {}
+
   async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
     const recipeExists = await this.recipesRepository.findOne({where: {title: createRecipeDto.title}});
     console.log('recipeExists?', recipeExists);
@@ -21,9 +22,10 @@ export class RecipeService {
     return this.recipesRepository.save(newRecipe);
   }
 
-  findAll(): Promise<Recipe[]> {
+  findAll(userId: number): Promise<Recipe[]> {
       return this.recipesRepository.find({
-        relations: {'user': true}
+        relations: ['user'],
+        where: {userId: userId}
       });
   }
 

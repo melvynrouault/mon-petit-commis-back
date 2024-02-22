@@ -1,5 +1,5 @@
 import { User } from 'src/user/entities/user.entity';
-import {Entity, PrimaryGeneratedColumn, Column, OneToMany, ManyToOne, JoinColumn} from 'typeorm';
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from 'typeorm';
 
 @Entity('recipe')
 export class Recipe {
@@ -32,6 +32,9 @@ export class Recipe {
         default: '',
     })    
     photoPath: string;
+
+    @Column()
+    userId: number;
 
     @ManyToOne(() => User, (user) => user.recipes)
     user: User;
