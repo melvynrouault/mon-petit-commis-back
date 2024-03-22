@@ -39,7 +39,6 @@ export class RecipeService {
 
   async update(id: number, updateRecipeDto: UpdateRecipeDto) {
     const recipeExists = await this.recipesRepository.findOne({where: {id: id}});
-    console.log(recipeExists);
     if(!recipeExists) {
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
     }
@@ -49,7 +48,6 @@ export class RecipeService {
 
   async remove(id: number) {
     const recipeExists = await this.recipesRepository.findOne({where: {id: id}}) ;
-    console.log(recipeExists);
     if(!recipeExists) {
         throw new HttpException('Recipe not found', HttpStatus.NOT_FOUND);
     }

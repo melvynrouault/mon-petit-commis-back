@@ -16,7 +16,6 @@ export class UserService {
   ) {}
   async create(createUserDto: CreateUserDto): Promise<User> {
     const userExists = await this.userRepository.findOne({where: {email: createUserDto.email}}) ;
-    console.log(userExists);
     if(userExists) {
         throw new HttpException('User already exists', HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -52,7 +51,6 @@ export class UserService {
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     const userExists = await this.userRepository.findOne({where: {id: id}});
-    console.log(userExists);
     if(!userExists) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
@@ -61,7 +59,6 @@ export class UserService {
 
   async remove(id: number) {
     const userExists = await this.userRepository.findOne({where: {id: id}}) ;
-    console.log(userExists);
     if(!userExists) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
