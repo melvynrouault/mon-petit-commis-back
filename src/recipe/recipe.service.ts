@@ -14,7 +14,6 @@ export class RecipeService {
 
   async create(createRecipeDto: CreateRecipeDto): Promise<Recipe> {
     const recipeExists = await this.recipesRepository.findOne({where: {title: createRecipeDto.title}});
-    console.log('recipeExists?', recipeExists);
     if(recipeExists) {
         throw new HttpException('Recipe already exists', HttpStatus.INTERNAL_SERVER_ERROR);
     }

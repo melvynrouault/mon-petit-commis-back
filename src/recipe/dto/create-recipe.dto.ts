@@ -11,4 +11,7 @@ export class CreateRecipeDto {
     description: string;
 
     urlPhoto: string
+
+    @IsNotEmpty()
+    userId: number;
 }
