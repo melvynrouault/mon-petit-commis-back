@@ -49,7 +49,11 @@ export class UserService {
     if(!userExists) {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
     }
-    if(userExists.password !== loginUserDto.password) {
+    const userPassword = loginUserDto.password;
+    const salt = 10;
+    const hashedPassword = await bcrypt.hash(userPassword, salt);
+    const isSamePassword = await bcrypt.compare(userPassword, hashedPassword);
+    if(!isSamePassword) {
       throw new HttpException('Invalid credentials', HttpStatus.INTERNAL_SERVER_ERROR);
     }
     const access_token = await this.jwtService.signAsync({id: userExists.id})
