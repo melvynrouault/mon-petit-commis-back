@@ -6,6 +6,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import * as bcrypt from "bcrypt";
+
 
 @Injectable()
 export class UserService {
@@ -14,11 +16,16 @@ export class UserService {
     private userRepository: Repository<User>,
     private jwtService: JwtService
   ) {}
+  
   async create(createUserDto: CreateUserDto): Promise<User> {
     const userExists = await this.userRepository.findOne({where: {email: createUserDto.email}}) ;
     if(userExists) {
-        throw new HttpException('User already exists', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException('User already exists', HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    const userPassword = createUserDto.password;
+    const salt = 10;
+    const hashedPassword = await bcrypt.hash(userPassword, salt);
+    createUserDto.password = hashedPassword;
     const newUser = this.userRepository.create(createUserDto);
     return this.userRepository.save(newUser);
   }
