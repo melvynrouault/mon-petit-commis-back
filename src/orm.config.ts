@@ -9,8 +9,9 @@ const isProduction = process.env.NODE_ENV === 'production';
 let config: TypeOrmModuleOptions;
 
 if (isProduction && process.env.DATABASE_URL) {
-  // Production config using Heroku's DATABASE_URL
-  const parseDatabaseUrl = (url: string) => {
+    console.log("production environnement")
+    // Production config using Heroku's DATABASE_URL
+    const parseDatabaseUrl = (url: string) => {
     const regex = /postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/;
     const match = url.match(regex);
 
