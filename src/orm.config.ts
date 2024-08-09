@@ -29,6 +29,14 @@ if (isProduction && process.env.DATABASE_URL) {
   };
 
   const dbConfig = parseDatabaseUrl(process.env.DATABASE_URL);
+  console.log('--------------------------');
+  console.log(process.env.DATABASE_URL);
+  console.log(dbConfig.host);
+  console.log(dbConfig.port);
+  console.log(dbConfig.username);
+  console.log(dbConfig.password);
+  console.log(dbConfig.database);
+  console.log('--------------------------');
 
   config = {
     type: 'postgres',
