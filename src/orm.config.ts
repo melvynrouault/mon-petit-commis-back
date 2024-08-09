@@ -45,8 +45,8 @@ if (isProduction && process.env.DATABASE_URL) {
     username: dbConfig.username,
     password: dbConfig.password,
     database: dbConfig.database,
-    synchronize: false, // Mettre à false en production
-    entities: ['dist/**/*.entity{.ts,.js}'],
+    synchronize: true, // Mettre à false en production
+    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
     ssl: {
       rejectUnauthorized: false,
     },
